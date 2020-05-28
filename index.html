@@ -41,14 +41,17 @@
       height: 100vh;
       background: #ccc;
       overflow-y: scroll;
-      transition: 0.5s;
     }
 
-    main > section {
+    main>section {
       height: 100vh;
       padding: 40px;
     }
-    #s1{ background: #abc;}
+
+    #s1,
+    #s3 {
+      background: #abc;
+    }
   </style>
 </head>
 
@@ -58,34 +61,38 @@
     <ul>
       <li><a href="#s1">about</a></li>
       <li><a href="#s2">skills</a></li>
+      <li><a href="#s3">portfolio</a></li>
     </ul>
   </nav>
-  <main>
+  <main id="main">
     <section id="s1">
       <h1>ABOUT 홍길동</h1>
     </section>
     <section id="s2">
       <h1>직무능력</h1>
     </section>
+    <section id="s3">
+      <h1>포트폴리오</h1>
+    </section>
   </main>
 
   <script>
-    $(function(){
+    $(function () {
 
       // 메인 영역 스크롤 애니메이션
-      $('#main_gnb a').on('click', function(){
-        var i = $(this).parent().index();
-        if(this.hash !== ''){
-          var hash = this.hash;  
-          console.log(hash)
-        }
-        $('main').animate({
-          scrollTop: $(hash).offset().top
-        }, 800, function(){
-          // window.location.hash = hash;
+
+      var link = document.querySelectorAll('#main_gnb a');
+
+      for (var i = 0; i < link.length; i++) {
+        link[i].addEventListener('click', function () {
+          var top = document.querySelector(this.hash).offsetTop;
+
+          $('#main').animate({
+            scrollTop: top
+          }, 800)
+          console.log(top, this.hash)
         })
-        return false;
-      })
+      }
 
     })
   </script>
